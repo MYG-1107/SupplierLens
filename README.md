@@ -1,10 +1,10 @@
-# SupplierLens v0.2
+# SupplierLens v0.2.1
 
 **Evidence-first supplier verification and procurement review workspace.**
 
 SupplierLens is a software product concept for a real B2B problem: businesses need a more repeatable way to collect supplier evidence, compare identities across documents, surface inconsistencies, and preserve a review trail before purchasing.
 
-## What changed in v0.2
+## What changed in v0.2.1
 
 - Real supplier directory backed by a local database
 - Dashboard metrics and review queue
@@ -24,7 +24,7 @@ SupplierLens is a software product concept for a real B2B problem: businesses ne
 
 > **A model should explain evidence, not replace it.**
 
-The v0.2 verification engine does not claim to certify suppliers or confirm government records. It only analyzes evidence supplied to the application. Connectors to permitted authoritative/public sources should be added behind explicit provider interfaces.
+The v0.2.1 verification engine does not claim to certify suppliers or confirm government records. It only analyzes evidence supplied to the application. Connectors to permitted authoritative/public sources should be added behind explicit provider interfaces.
 
 ## Architecture
 
@@ -41,7 +41,7 @@ FastAPI
   └── audit events
       │
       ▼
-SQLite (v0.2 local MVP)
+SQLite (v0.2.1 local MVP)
 ```
 
 The API data layer can later move to PostgreSQL without changing the product workflow.
@@ -84,7 +84,7 @@ The LLM is used only for explaining the latest deterministic verification report
 
 ## Current limitations
 
-- Government/public-source verification is not included in v0.2.
+- Government/public-source verification is not included in v0.2.1.
 - OCR for image/PDF documents is scaffolded as an extension point; text/CSV/JSON extraction is functional.
 - No authentication/authorization yet.
 - SQLite is intended for local MVP use; use PostgreSQL for multi-user deployment.

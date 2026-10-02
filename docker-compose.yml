@@ -18,17 +18,21 @@ services:
     command: ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8000", "--reload"]
 
   web:
-    build: ./apps/web
+    build:
+      context: ./apps/web
+      target: dev
     environment:
       BACKEND_INTERNAL_URL: http://api:8000
     ports:
       - "3000:3000"
     volumes:
       - ./apps/web:/app
-      - /app/node_modules
-      - /app/.next
+      - supplierlens_web_node_modules_v02:/app/node_modules
+      - supplierlens_web_next_v02:/app/.next
     command: ["npm", "run", "dev"]
     depends_on:
       - api
 
-volumes: {}
+volumes:
+  supplierlens_web_node_modules_v02:
+  supplierlens_web_next_v02:

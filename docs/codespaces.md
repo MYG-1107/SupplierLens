@@ -2,19 +2,19 @@
 
 ## Start
 
-1. Open the repository in GitHub.
-2. Choose **Code → Codespaces → Create codespace on main**.
-3. Wait for the container to build.
-4. Run `docker compose up --build`.
-5. Open forwarded port `3000`.
-
-## Development loop
-
 ```bash
-git status
-git add .
-git commit -m "feat: ..."
-git push
+docker compose down -v
+docker compose up --build
 ```
 
-The `.devcontainer` forwards ports 3000 and 8000 so the browser can reach the app and API documentation from the Codespace.
+The `web` service explicitly builds the `dev` Docker target so its Next.js dependencies are fresh and available to `npm run dev`. Versioned volumes are used for `node_modules` and `.next` to avoid stale state from earlier SupplierLens images.
+
+Open the forwarded port **3000** for the web app and **8000** for the FastAPI docs.
+
+## Verify
+
+```bash
+curl http://localhost:8000/health
+```
+
+Then run a supplier verification from the UI.
