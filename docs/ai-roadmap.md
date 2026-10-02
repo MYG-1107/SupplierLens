@@ -1,36 +1,25 @@
-# AI / ML Roadmap
+# AI/ML roadmap
 
-## Step 1 — Document extraction
-Use OCR and structured extraction to convert uploaded PDFs/images into fields:
-- Legal name
-- Trade name
-- GSTIN
-- Address
-- Bank account name
-- Contact details
-- Document date
+## Stage 1 — document intelligence
 
-## Step 2 — Entity resolution
-Create embeddings for supplier names and addresses. Combine semantic similarity with deterministic normalization and business rules.
+Add OCR and document-layout extraction for PDF/image evidence. Normalize extracted fields into the existing `DocumentEvidence` contract.
 
-## Step 3 — Anomaly detection
-Train a model using synthetic and eventually consented historical procurement data. Candidate features include mismatch counts, unusual field combinations, evidence freshness, domain age signals where legally and technically available, and supplier-history patterns.
+## Stage 2 — entity resolution
 
-Do not train a fraud classifier until there is a defensible labeled dataset.
+Use character similarity as the baseline, then evaluate multilingual embeddings to resolve legal names, trade names and account names. Keep a human-review threshold.
 
-## Step 4 — RAG
-Store normalized evidence and source metadata. Retrieve the relevant evidence before producing an explanation.
+## Stage 3 — anomaly detection
 
-## Step 5 — Explainable LLM
-Prompt the LLM to summarize only retrieved evidence, disclose uncertainty, and list next verification steps. Never allow it to create unsupported supplier facts.
+Build a labelled synthetic/evaluation dataset containing normal and inconsistent supplier evidence. Compare interpretable baselines such as logistic regression, isolation forest and gradient boosting.
 
-## Step 6 — Evaluation
-Create a test set with:
-- clean suppliers
-- harmless name variations
-- genuine bank/legal-name differences
-- document OCR errors
-- address abbreviations
-- deliberate synthetic inconsistencies
+## Stage 4 — RAG
 
-Measure precision/recall for each individual signal rather than only an overall score.
+Index evidence snippets, supplier policy documents and verification guidance. Answers should cite the evidence chunks used.
+
+## Stage 5 — LLM orchestration
+
+Use the LLM only after deterministic checks and retrieval. Return structured claims, source references, uncertainty and suggested follow-up actions.
+
+## Stage 6 — continuous monitoring
+
+Track changes to supplier attributes and new evidence events. Trigger re-verification when material changes occur.

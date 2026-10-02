@@ -1,142 +1,103 @@
-# SupplierLens
+# SupplierLens v0.2
 
-AI-powered supplier verification and procurement risk intelligence platform for businesses.
+**Evidence-first supplier verification and procurement review workspace.**
 
-SupplierLens is a portfolio-grade MVP inspired by the supplier-verification problem surfaced by Razorpay's Fix My Itch initiative. It helps a procurement user submit supplier details and evidence, reconcile identity fields, detect inconsistencies, and generate an explainable verification report.
+SupplierLens is a software product concept for a real B2B problem: businesses need a more repeatable way to collect supplier evidence, compare identities across documents, surface inconsistencies, and preserve a review trail before purchasing.
 
-> **Important:** SupplierLens is a decision-support prototype, not a legal, financial, compliance, or fraud-certification service. Verification coverage depends on the evidence and data sources available to the deployment.
+## What changed in v0.2
 
-## MVP capabilities
+- Real supplier directory backed by a local database
+- Dashboard metrics and review queue
+- Create supplier workflow
+- Evidence/document upload with size/type validation
+- Basic text/CSV/JSON field extraction for uploaded evidence
+- Deterministic verification engine
+- Explainable review signals with evidence and remediation
+- Verification history and audit trail
+- Supplier Copilot with deterministic mode and optional LLM mode
+- JSON report export
+- Codespaces/devcontainer support
+- GitHub Actions CI
+- Docker Compose development workflow
 
-- Supplier verification workspace
-- GSTIN format validation
-- Cross-field consistency checks
-- Document-evidence model with source labels
-- Explainable deterministic risk flags
-- Optional LLM explanation layer
-- Synthetic sample supplier data
-- REST API with FastAPI
-- Next.js + TypeScript web dashboard
-- PostgreSQL-ready persistence layer
-- Docker Compose development environment
-- GitHub Codespaces configuration
-- Automated API tests and CI
+## Product principle
+
+> **A model should explain evidence, not replace it.**
+
+The v0.2 verification engine does not claim to certify suppliers or confirm government records. It only analyzes evidence supplied to the application. Connectors to permitted authoritative/public sources should be added behind explicit provider interfaces.
 
 ## Architecture
 
 ```text
-Next.js Web App
-      |
-      v
-FastAPI API -----> Verification Engine
-      |                  |
-      |                  +--> Identity checks
-      |                  +--> Consistency checks
-      |                  +--> Evidence checks
-      |                  +--> Risk signals
-      |                  +--> Optional LLM explanation
-      v
-PostgreSQL (ready)
-
-Future connectors:
-GST / Udyam / eCourts / Website intelligence / Document OCR
+Next.js web UI
+      │
+      │ same-origin /api rewrite
+      ▼
+FastAPI
+  ├── supplier service
+  ├── document service
+  ├── verification engine
+  ├── Copilot service
+  └── audit events
+      │
+      ▼
+SQLite (v0.2 local MVP)
 ```
 
-## Repository layout
+The API data layer can later move to PostgreSQL without changing the product workflow.
 
-```text
-supplierlens-ai/
-├── .devcontainer/
-├── .github/workflows/
-├── apps/
-│   ├── api/
-│   │   ├── app/
-│   │   │   ├── api/
-│   │   │   ├── core/
-│   │   │   ├── models/
-│   │   │   ├── schemas/
-│   │   │   ├── services/
-│   │   │   └── utils/
-│   │   └── tests/
-│   └── web/
-├── data/synthetic/
-├── docs/
-├── docker-compose.yml
-└── README.md
-```
+## Run in GitHub Codespaces
 
-## Quick start in GitHub Codespaces
-
-### Option A: Docker Compose
+Create a Codespace on `main`, then run:
 
 ```bash
-git clone <your-repository-url>
-cd SupplierLens
 docker compose up --build
 ```
 
-Open:
+Open the forwarded **3000** port for the web app. FastAPI documentation is available on the forwarded **8000** port at `/docs`.
 
-- Web: http://localhost:3000
-- API docs: http://localhost:8000/docs
-- Health: http://localhost:8000/health
+### Useful URLs
 
-### Option B: Run services locally
+- Web: `http://localhost:3000`
+- API: `http://localhost:8000`
+- Swagger: `http://localhost:8000/docs`
+- Health: `http://localhost:8000/health`
 
-API:
+## Test the backend
 
 ```bash
 cd apps/api
-python -m venv .venv
-# Windows: .venv\\Scripts\\activate
-# Linux/macOS/Codespaces: source .venv/bin/activate
-pip install -r requirements.txt
-uvicorn app.main:app --reload --port 8000
+python -m pytest -q
 ```
 
-Web:
+## Optional LLM mode
 
-```bash
-cd apps/web
-npm install
-npm run dev
+Copy `.env.example` to `.env`, then set:
+
+```text
+LLM_ENABLED=true
+OPENAI_API_KEY=your_key
+OPENAI_MODEL=gpt-5
 ```
 
-## Example API request
+The LLM is used only for explaining the latest deterministic verification report. It does not replace the verification engine.
 
-```bash
-curl -X POST http://localhost:8000/api/v1/verification/check \\
-  -H "Content-Type: application/json" \\
-  -d @../../data/synthetic/example_supplier.json
-```
+## Current limitations
+
+- Government/public-source verification is not included in v0.2.
+- OCR for image/PDF documents is scaffolded as an extension point; text/CSV/JSON extraction is functional.
+- No authentication/authorization yet.
+- SQLite is intended for local MVP use; use PostgreSQL for multi-user deployment.
+- Uploaded documents should not contain production personal/financial data during development.
 
 ## Roadmap
 
-### Phase 1 — MVP
-
-Supplier intake, evidence submission, consistency checks, explainable report.
-
-### Phase 2 — AI
-
-OCR, entity resolution using embeddings, anomaly detection, RAG, LLM explanations.
-
-### Phase 3 — Connectors
-
-Permitted official/public data connectors and user-provided verification evidence.
-
-### Phase 4 — Procurement workflow
-
-Approval workflows, audit log, monitoring, verification expiry, alerts, role-based access.
-
-## Security and privacy principles
-
-- Never commit secrets to the repository.
-- Treat uploaded supplier documents as sensitive business data.
-- Keep an audit trail for evidence and generated findings.
-- Separate source evidence from model-generated explanations.
-- Make model confidence and verification coverage visible.
-- Require human review for high-impact procurement decisions.
-
-## License
-
-MIT
+1. OCR + structured document extraction
+2. Entity resolution with embeddings
+3. Supplier anomaly model and evaluation dataset
+4. RAG over evidence and policy documents
+5. Permitted official/public data connectors
+6. Team approvals and role-based access
+7. Continuous supplier monitoring
+8. Production PostgreSQL + object storage
+9. Observability, security hardening and audit controls

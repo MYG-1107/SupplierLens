@@ -1,26 +1,20 @@
 {
-  "supplier_name": "ABC Components Private Limited",
-  "gstin": "36ABCDE1234F1Z5",
-  "website": "https://example.com",
-  "registered_address": "Plot 12, Industrial Area, Hyderabad, Telangana",
-  "bank_account_name": "ABC Components Pvt Ltd",
-  "evidence": [
-    {"source": "GST", "field": "gstin", "value": "36ABCDE1234F1Z5"},
-    {"source": "Supplier Website", "field": "website", "value": "https://example.com"}
-  ],
+  "supplier_name": "Northstar Tools & Fasteners",
+  "gstin": "36ABC1234DE5FZ7",
+  "website": "https://northstar.example",
+  "registered_address": "Warehouse 4, Jeedimetla, Hyderabad, Telangana",
+  "bank_account_name": "Northstar Tools",
+  "category": "Industrial supplies",
   "documents": [
     {
-      "document_type": "gst_certificate",
-      "extracted_fields": {
-        "legal_name": "ABC Components Private Limited",
-        "address": "Plot 12, Industrial Area, Hyderabad, Telangana"
-      }
+      "file_name": "bank-proof.txt",
+      "document_type": "bank_proof",
+      "text": "account_name: Northstar Tools"
     },
     {
-      "document_type": "bank_proof",
-      "extracted_fields": {
-        "account_name": "ABC Components Pvt Ltd"
-      }
+      "file_name": "gst-certificate.txt",
+      "document_type": "gst_certificate",
+      "text": "legal_name: Northstar Tools & Fasteners\naddress: Warehouse 4, Jeedimetla, Hyderabad, Telangana\ngstin: 36ABC1234DE5FZ7"
     }
   ]
 }

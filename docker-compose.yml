@@ -4,7 +4,9 @@ services:
     environment:
       APP_ENV: development
       API_PORT: 8000
-      DATABASE_URL: postgresql+psycopg://supplierlens:supplierlens@db:5432/supplierlens
+      DATABASE_URL: sqlite:////data/supplierlens.db
+      UPLOAD_DIR: /data/uploads
+      MAX_UPLOAD_MB: 10
       LLM_ENABLED: ${LLM_ENABLED:-false}
       OPENAI_API_KEY: ${OPENAI_API_KEY:-}
       OPENAI_MODEL: ${OPENAI_MODEL:-gpt-5}
@@ -13,38 +15,20 @@ services:
     volumes:
       - ./apps/api:/app
       - ./data:/data
-    depends_on:
-      db:
-        condition: service_healthy
+    command: ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8000", "--reload"]
 
   web:
     build: ./apps/web
     environment:
-      NEXT_PUBLIC_API_URL: http://localhost:8000
+      BACKEND_INTERNAL_URL: http://api:8000
     ports:
       - "3000:3000"
     volumes:
       - ./apps/web:/app
       - /app/node_modules
       - /app/.next
+    command: ["npm", "run", "dev"]
     depends_on:
       - api
 
-  db:
-    image: postgres:16-alpine
-    environment:
-      POSTGRES_USER: supplierlens
-      POSTGRES_PASSWORD: supplierlens
-      POSTGRES_DB: supplierlens
-    ports:
-      - "5432:5432"
-    volumes:
-      - supplierlens_db:/var/lib/postgresql/data
-    healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U supplierlens -d supplierlens"]
-      interval: 5s
-      timeout: 5s
-      retries: 10
-
-volumes:
-  supplierlens_db:
+volumes: {}

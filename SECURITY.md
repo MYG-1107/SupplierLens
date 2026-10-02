@@ -1,9 +1,11 @@
-# Security Policy
+# Security
 
-## Reporting a vulnerability
+SupplierLens handles supplier and procurement evidence. Treat uploaded files as sensitive business data.
 
-Do not disclose sensitive vulnerabilities in public issues. Use a private security contact for production deployments.
-
-## MVP security notes
-
-This repository is a development prototype. Do not upload real customer documents, credentials, bank details, or regulated personal information until authentication, authorization, encryption, secure object storage, retention controls, and an audit strategy are implemented.
+- Never commit secrets or production documents.
+- Keep API keys in environment variables or a secrets manager.
+- Validate upload extensions and size limits.
+- Add authentication and authorization before multi-user deployment.
+- Prefer private object storage for production documents.
+- Keep source evidence and model output distinguishable.
+- Do not treat the AI output as a certification, legal determination, or sole basis for a payment decision.

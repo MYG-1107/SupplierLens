@@ -1,19 +1,20 @@
-# GitHub Codespaces workflow
+# GitHub Codespaces
 
-1. Create the GitHub repository as an empty repository.
-2. Create a Codespace from `main`.
-3. Upload/extract this project into the repository root.
+## Start
+
+1. Open the repository in GitHub.
+2. Choose **Code → Codespaces → Create codespace on main**.
+3. Wait for the container to build.
 4. Run `docker compose up --build`.
-5. Open port 3000 for the web UI.
-6. Open port 8000 for FastAPI Swagger docs.
-7. Commit in small milestones.
+5. Open forwarded port `3000`.
 
-Suggested milestones:
+## Development loop
 
-- `feat: create supplier intake workspace`
-- `feat: add deterministic verification engine`
-- `feat: add evidence timeline`
-- `feat: add document extraction interface`
-- `feat: add entity resolution prototype`
-- `feat: add RAG evidence assistant`
-- `chore: add CI and security checks`
+```bash
+git status
+git add .
+git commit -m "feat: ..."
+git push
+```
+
+The `.devcontainer` forwards ports 3000 and 8000 so the browser can reach the app and API documentation from the Codespace.

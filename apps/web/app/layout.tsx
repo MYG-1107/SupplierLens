@@ -2,8 +2,9 @@ import type { Metadata } from "next";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "SupplierLens — Evidence-first supplier verification",
-  description: "A procurement workspace for reconciling supplier evidence and surfacing explainable verification findings.",
+  title: "SupplierLens — Supplier verification workspace",
+  description: "Evidence-first supplier verification, document reconciliation and explainable procurement review.",
+  icons: { icon: "/favicon.svg" },
 };
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {

@@ -1,28 +1,23 @@
-# Product Scope — SupplierLens v0.1
+# Product scope — v0.2
 
-## User
-Procurement, finance, operations, and SME owners who need to onboard a new supplier.
+## Primary user
 
-## Core job-to-be-done
-Before making a purchasing commitment, assemble available supplier evidence in one place, detect contradictions, and identify items that need human review.
+Procurement, finance, operations, and supplier-onboarding teams at small and mid-sized businesses.
 
-## Non-goals for v0.1
-- Certifying a supplier as genuine
-- Determining legal liability
-- Automatically approving payments
-- Scraping protected government portals
-- Making a fraud accusation from weak evidence
+## Core job to be done
 
-## Evidence model
-Each finding should point back to a source item. The UI should distinguish:
-1. Source evidence supplied by the user or a permitted external connector.
-2. Deterministic software checks.
-3. ML-derived signals.
-4. LLM-generated explanation.
+Before a purchase is committed, a reviewer wants one workspace that records supplier facts, preserves evidence, identifies inconsistencies, and suggests follow-up checks.
 
-## Product metrics to measure later
-- Time to complete supplier onboarding
-- Percentage of supplier records with complete identity evidence
-- Human review rate
-- False-positive rate for consistency flags
-- Mean time from supplier submission to procurement decision
+## v0.2 user journey
+
+1. Create a supplier record.
+2. Review supplier identity details.
+3. Upload evidence.
+4. Run verification.
+5. Review findings and remediation notes.
+6. Ask Copilot a question about the report.
+7. Export the report and retain the audit trail.
+
+## Explicit non-goals
+
+SupplierLens does not certify a supplier, guarantee a transaction, or replace legal/compliance review.
