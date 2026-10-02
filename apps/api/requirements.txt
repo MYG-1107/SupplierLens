@@ -1,0 +1,12 @@
+fastapi==0.115.14
+uvicorn[standard]==0.34.3
+pydantic==2.11.7
+pydantic-settings==2.10.1
+python-multipart==0.0.20
+SQLAlchemy==2.0.41
+psycopg[binary]==3.2.9
+rapidfuzz==3.13.0
+scikit-learn==1.7.0
+openai==1.93.0
+pytest==8.4.1
+httpx==0.28.1

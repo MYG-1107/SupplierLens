@@ -1,0 +1,50 @@
+services:
+  api:
+    build: ./apps/api
+    environment:
+      APP_ENV: development
+      API_PORT: 8000
+      DATABASE_URL: postgresql+psycopg://supplierlens:supplierlens@db:5432/supplierlens
+      LLM_ENABLED: ${LLM_ENABLED:-false}
+      OPENAI_API_KEY: ${OPENAI_API_KEY:-}
+      OPENAI_MODEL: ${OPENAI_MODEL:-gpt-5}
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./apps/api:/app
+      - ./data:/data
+    depends_on:
+      db:
+        condition: service_healthy
+
+  web:
+    build: ./apps/web
+    environment:
+      NEXT_PUBLIC_API_URL: http://localhost:8000
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./apps/web:/app
+      - /app/node_modules
+      - /app/.next
+    depends_on:
+      - api
+
+  db:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_USER: supplierlens
+      POSTGRES_PASSWORD: supplierlens
+      POSTGRES_DB: supplierlens
+    ports:
+      - "5432:5432"
+    volumes:
+      - supplierlens_db:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U supplierlens -d supplierlens"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+volumes:
+  supplierlens_db:
